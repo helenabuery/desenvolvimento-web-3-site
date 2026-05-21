@@ -1,0 +1,758 @@
+/* ================================================
+   STYLES.CSS — EducaSegura
+   Atualizado: contraste aprimorado (claro/escuro/daltonismo)
+   ================================================ */
+
+   :root {
+    /* Modo Claro — contraste elevado (AA/AAA WCAG) */
+    --primary-color:   #0a4f6a;
+    --accent-color:    #08395a;
+    --bg-light:        #c4e8f6;
+    --secondary-color: #252d5c;
+    --neutral-color:   #08395a;
+    --dark-text:       #0a0a0a;
+    --link-color:      #08395a;
+    --color-success:   #145230;
+    --color-error:     #9b1414;
+    --color-warning:   #6b2d06;
+    --color-info:      #08395a;
+    --focus-ring:      0 0 0 3px #d97706, 0 0 0 5px #0a0a0a;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark-text);
+    background-color: #f9fafb;
+    scroll-behavior: smooth;
+}
+
+/* ── SECTION TITLE ───────────────────────────────── */
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 4px;
+    background: var(--accent-color);
+    margin-top: 10px;
+    /* CORREÇÃO: centraliza o underline quando o título está centralizado */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Para títulos alinhados à esquerda, reposiciona o underline */
+.text-left .section-title::after,
+.lg\:text-left .section-title::after,
+.sobre-text .section-title::after {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+/* ── HERO ────────────────────────────────────────── */
+.hero-section {
+    background: linear-gradient(135deg, var(--bg-light) 0%, #fff 100%);
+}
+
+.hero-placeholder {
+    background-color: var(--neutral-color);
+    /* CORREÇÃO: URL sem caracteres especiais problemáticos — use o caminho correto da sua imagem */
+    background-image: url('imgs/hero-image.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* ── CARDS ───────────────────────────────────────── */
+.card-hover {
+    transition: transform 0.3s ease, border-top-color 0.3s ease;
+    border-top: 4px solid var(--neutral-color) !important;
+}
+
+.card-hover:hover {
+    transform: translateY(-10px);
+    border-top-color: var(--accent-color) !important;
+}
+
+/* ── QUIZ ────────────────────────────────────────── */
+#quiz-card {
+    transition: all 0.5s ease;
+}
+
+.quiz-btn {
+    border: 2px solid var(--neutral-color);
+    padding: 15px;
+    border-radius: 12px;
+    transition: all 0.2s;
+    background: white;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: left;
+    width: 100%;
+    color: var(--dark-text);
+}
+
+.quiz-btn:hover {
+    border-color: var(--secondary-color);
+    background-color: #e8f4fb;
+    transform: scale(1.02);
+}
+
+/* CORREÇÃO: adicionado estado de foco acessível para os botões do quiz */
+.quiz-btn:focus-visible {
+    outline: 3px solid #d97706 !important;
+    outline-offset: 3px !important;
+}
+
+/* CORREÇÃO: estado desabilitado para evitar cliques duplos */
+.quiz-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.correct-flash {
+    animation: success-pulse 0.5s;
+}
+
+@keyframes success-pulse {
+    0%   { background-color: #fff; }
+    50%  { background-color: #bbf7d0; }
+    100% { background-color: #fff; }
+}
+
+/* ── ACESSIBILIDADE: FOCO ────────────────────────── */
+*:focus-visible {
+    outline: 3px solid #d97706 !important;
+    outline-offset: 3px !important;
+    box-shadow: var(--focus-ring) !important;
+    border-radius: 4px;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+/* ── SKIP LINK ───────────────────────────────────── */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 16px;
+    background: #000;
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 0 0 8px 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    z-index: 99999;
+    text-decoration: none;
+    transition: top 0.2s;
+}
+
+.skip-link:focus { top: 0; }
+
+/* ── ARIA LIVE ───────────────────────────────────── */
+#a11y-announcer {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* ── REDUCED MOTION ──────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+}
+
+/* ── DARK MODE ───────────────────────────────────── */
+body.dark-mode {
+    --primary-color:   #7dd3f0;
+    --accent-color:    #5bbce0;
+    --bg-light:        #111e2b;
+    --secondary-color: #aac4e2;
+    --neutral-color:   #7dd3f0;
+    --dark-text:       #f0f6fb;
+    background-color: #111e2b !important;
+    color: #f0f6fb;
+}
+
+/* navbar */
+body.dark-mode #navbar {
+    background-color: #111e2b !important;
+    border-bottom: 2px solid #5bbce0;
+}
+
+/* hero — fundo único, sem gradiente */
+body.dark-mode .hero-section {
+    background: #111e2b !important;
+}
+
+/* seções com fundo alternado */
+body.dark-mode section,
+body.dark-mode #sobre,
+body.dark-mode #tipos,
+body.dark-mode #noticias {
+    background-color: #111e2b !important;
+}
+
+/* textos */
+body.dark-mode h1, body.dark-mode h2,
+body.dark-mode h3, body.dark-mode h4,
+body.dark-mode h5, body.dark-mode p  { color: #f0f6fb !important; }
+
+/* classes Tailwind de texto que o HTML usa diretamente */
+body.dark-mode .text-gray-900,
+body.dark-mode .text-gray-800,
+body.dark-mode .text-gray-700 { color: #f0f6fb !important; }
+
+body.dark-mode .text-gray-600,
+body.dark-mode .text-gray-500 { color: #b8cfe0 !important; }
+
+/* fundos brancos / cinza claro do Tailwind */
+body.dark-mode .bg-white,
+body.dark-mode .bg-gray-50 { background-color: #111e2b !important; }
+
+/* cards */
+body.dark-mode .card-hover,
+body.dark-mode .noticia-card {
+    background-color: #1a2d40 !important;
+    color: #f0f6fb !important;
+    border-color: #2d4a65 !important;
+}
+
+/* quiz */
+body.dark-mode .quiz-btn {
+    background-color: #1a2d40;
+    color: #f0f6fb;
+    border-color: #5bbce0;
+}
+
+body.dark-mode .quiz-btn:hover {
+    background-color: #1e3552;
+    border-color: #7dd3f0;
+}
+
+body.dark-mode #quiz-card {
+    background-color: #1a2d40 !important;
+    color: #f0f6fb !important;
+}
+
+/* footer */
+body.dark-mode footer {
+    background-color: #0b1520 !important;
+    color: #f0f6fb !important;
+}
+
+/* card "Você sabia?" na seção sobre */
+body.dark-mode #sobre > div > div:last-child > div {
+    background-color: #1a2d40 !important;
+}
+
+/* ── ALTO CONTRASTE — NÍVEL 1 (padrão preto/branco) ── */
+body.high-contrast {
+    --primary-color:   #003f6b;
+    --accent-color:    #002a47;
+    --secondary-color: #12136e;
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.high-contrast #navbar {
+    background-color: #000 !important;
+    border-bottom: 3px solid #fff !important;
+}
+
+body.high-contrast a,
+body.high-contrast .nav-link { color: #000 !important; text-decoration: underline; }
+
+body.high-contrast #navbar a { color: #fff !important; }
+
+body.high-contrast .card-hover,
+body.high-contrast .noticia-card {
+    border: 2px solid #000 !important;
+    background-color: #fff !important;
+    color: #000 !important;
+}
+
+body.high-contrast footer {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-top: 3px solid #fff;
+}
+
+body.high-contrast .quiz-btn {
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+    font-weight: 700;
+}
+
+/* ── ALTO CONTRASTE — NÍVEL 2 (amarelo sobre preto) ── */
+body.high-contrast-2 {
+    --primary-color:   #ffff00;
+    --accent-color:    #ffd700;
+    --secondary-color: #ffcc00;
+    background-color: #000000 !important;
+    color: #ffff00 !important;
+}
+
+body.high-contrast-2 #navbar {
+    background-color: #000 !important;
+    border-bottom: 3px solid #ffff00 !important;
+}
+
+body.high-contrast-2 a,
+body.high-contrast-2 .nav-link { color: #ffff00 !important; text-decoration: underline; }
+
+body.high-contrast-2 h1, body.high-contrast-2 h2,
+body.high-contrast-2 h3, body.high-contrast-2 h4,
+body.high-contrast-2 h5, body.high-contrast-2 p,
+body.high-contrast-2 span { color: #ffff00 !important; }
+
+body.high-contrast-2 .card-hover,
+body.high-contrast-2 .noticia-card {
+    border: 2px solid #ffff00 !important;
+    background-color: #000 !important;
+    color: #ffff00 !important;
+}
+
+body.high-contrast-2 footer {
+    background-color: #000 !important;
+    color: #ffff00 !important;
+    border-top: 3px solid #ffff00;
+}
+
+body.high-contrast-2 .quiz-btn {
+    border: 2px solid #ffff00 !important;
+    background: #000 !important;
+    color: #ffff00 !important;
+    font-weight: 700;
+}
+
+body.high-contrast-2 #quiz-card {
+    background-color: #000 !important;
+    color: #ffff00 !important;
+    border: 2px solid #ffff00 !important;
+}
+
+body.high-contrast-2 #navbar a { color: #ffff00 !important; }
+
+/* ── ALTO CONTRASTE — NÍVEL 3 (ciano sobre preto, para daltonismo) ── */
+body.high-contrast-3 {
+    --primary-color:   #00ffff;
+    --accent-color:    #00dddd;
+    --secondary-color: #00bbbb;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+body.high-contrast-3 #navbar {
+    background-color: #000 !important;
+    border-bottom: 3px solid #00ffff !important;
+}
+
+body.high-contrast-3 a,
+body.high-contrast-3 .nav-link { color: #00ffff !important; text-decoration: underline; }
+
+body.high-contrast-3 h1, body.high-contrast-3 h2,
+body.high-contrast-3 h3, body.high-contrast-3 h4,
+body.high-contrast-3 h5 { color: #00ffff !important; }
+
+body.high-contrast-3 p,
+body.high-contrast-3 span { color: #ffffff !important; }
+
+body.high-contrast-3 .card-hover,
+body.high-contrast-3 .noticia-card {
+    border: 2px solid #00ffff !important;
+    background-color: #000 !important;
+    color: #fff !important;
+}
+
+body.high-contrast-3 footer {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-top: 3px solid #00ffff;
+}
+
+body.high-contrast-3 .quiz-btn {
+    border: 2px solid #00ffff !important;
+    background: #000 !important;
+    color: #fff !important;
+    font-weight: 700;
+}
+
+body.high-contrast-3 #quiz-card {
+    background-color: #000 !important;
+    color: #fff !important;
+    border: 2px solid #00ffff !important;
+}
+
+body.high-contrast-3 #navbar a { color: #00ffff !important; }
+
+body.high-contrast.dark-mode {
+    background-color: #000 !important;
+    color: #ffff00 !important;
+}
+
+body.high-contrast.dark-mode .card-hover,
+body.high-contrast.dark-mode .noticia-card,
+body.high-contrast.dark-mode #navbar {
+    background-color: #000 !important;
+    color: #ffff00 !important;
+    border-color: #ffff00 !important;
+}
+
+/* ── MODOS DALTÔNICO ─────────────────────────────── */
+/*
+   Problema: o HTML usa classes Tailwind fixas (text-gray-900, bg-white etc.)
+   que ignoram variáveis CSS. Precisamos sobrescrever as cores diretamente.
+
+   Deuteranopia  — dificuldade com verde. Usa azul/laranja para distinguir.
+   Protanopia    — dificuldade com vermelho. Usa azul/dourado.
+   Tritanopia    — dificuldade com azul. Usa verde/magenta.
+*/
+
+/* ── DEUTERANOPIA ── */
+body.colorblind-deuteranopia {
+    --primary-color:   #0055cc;
+    --accent-color:    #003d99;
+    --secondary-color: #c05000;
+    --link-color:      #003d99;
+    --neutral-color:   #003d99;
+    --color-success:   #004d99;
+    --color-error:     #c05000;
+    --color-warning:   #a03d00;
+}
+
+/* links e botões de nav */
+body.colorblind-deuteranopia a,
+body.colorblind-deuteranopia .nav-link { color: #003d99 !important; }
+
+body.colorblind-deuteranopia #navbar { border-bottom-color: #003d99 !important; }
+
+/* bordas dos cards */
+body.colorblind-deuteranopia .card-hover { border-top-color: #003d99 !important; }
+
+/* botão de destaque na nav */
+body.colorblind-deuteranopia .btn-custom,
+body.colorblind-deuteranopia a.bg-secondary { background-color: #c05000 !important; }
+
+/* quiz */
+body.colorblind-deuteranopia .quiz-btn { border-color: #003d99 !important; }
+
+/* seção quiz (fundo primário) */
+body.colorblind-deuteranopia #quiz { background-color: #003d99 !important; }
+
+/* badges de notícias: trocar vermelho por azul, amarelo por laranja escuro */
+body.colorblind-deuteranopia .bg-red-500   { background-color: #0055cc !important; }
+body.colorblind-deuteranopia .bg-yellow-400 { background-color: #c05000 !important; color: #fff !important; }
+body.colorblind-deuteranopia .bg-blue-400  { background-color: #003d99 !important; }
+
+/* footer */
+body.colorblind-deuteranopia footer { background-color: #003d99 !important; }
+
+/* ── PROTANOPIA ── */
+body.colorblind-protanopia {
+    --primary-color:   #0055cc;
+    --accent-color:    #003d99;
+    --secondary-color: #a06800;
+    --link-color:      #003d99;
+    --neutral-color:   #003d99;
+    --color-success:   #004d99;
+    --color-error:     #a06800;
+    --color-warning:   #7a4d00;
+}
+
+body.colorblind-protanopia a,
+body.colorblind-protanopia .nav-link { color: #003d99 !important; }
+
+body.colorblind-protanopia #navbar { border-bottom-color: #003d99 !important; }
+
+body.colorblind-protanopia .card-hover { border-top-color: #003d99 !important; }
+
+body.colorblind-protanopia .btn-custom,
+body.colorblind-protanopia a.bg-secondary { background-color: #a06800 !important; }
+
+body.colorblind-protanopia .quiz-btn { border-color: #003d99 !important; }
+
+body.colorblind-protanopia #quiz { background-color: #003d99 !important; }
+
+body.colorblind-protanopia .bg-red-500    { background-color: #0055cc !important; }
+body.colorblind-protanopia .bg-yellow-400 { background-color: #a06800 !important; color: #fff !important; }
+body.colorblind-protanopia .bg-blue-400   { background-color: #003d99 !important; }
+
+body.colorblind-protanopia footer { background-color: #003d99 !important; }
+
+/* ── TRITANOPIA ── */
+body.colorblind-tritanopia {
+    --primary-color:   #007a5e;
+    --accent-color:    #005a44;
+    --secondary-color: #8b005a;
+    --link-color:      #005a44;
+    --neutral-color:   #005a44;
+    --color-success:   #007a5e;
+    --color-error:     #8b005a;
+    --color-warning:   #784200;
+}
+
+body.colorblind-tritanopia a,
+body.colorblind-tritanopia .nav-link { color: #005a44 !important; }
+
+body.colorblind-tritanopia #navbar { border-bottom-color: #005a44 !important; }
+
+body.colorblind-tritanopia .card-hover { border-top-color: #005a44 !important; }
+
+body.colorblind-tritanopia .btn-custom,
+body.colorblind-tritanopia a.bg-secondary { background-color: #8b005a !important; }
+
+body.colorblind-tritanopia .quiz-btn { border-color: #005a44 !important; }
+
+body.colorblind-tritanopia #quiz { background-color: #005a44 !important; }
+
+body.colorblind-tritanopia .bg-red-500    { background-color: #8b005a !important; }
+body.colorblind-tritanopia .bg-yellow-400 { background-color: #784200 !important; color: #fff !important; }
+body.colorblind-tritanopia .bg-blue-400   { background-color: #005a44 !important; }
+
+body.colorblind-tritanopia footer { background-color: #005a44 !important; }
+
+/* ── ESPAÇAMENTO DE TEXTO ────────────────────────── */
+body.text-spacing {
+    letter-spacing: 0.12em;
+    word-spacing:   0.16em;
+    line-height:    1.8 !important;
+}
+
+body.text-spacing p,
+body.text-spacing li,
+body.text-spacing label {
+    line-height:   2 !important;
+    margin-bottom: 1.2em;
+}
+
+/* ── PAINEL DE ACESSIBILIDADE ────────────────────── */
+#a11y-panel {
+    position: fixed;
+    bottom: 20px;
+    right:  20px;
+    z-index: 9999;
+    font-family: 'Inter', sans-serif;
+}
+
+#a11y-toggle-btn {
+    width:  56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--secondary-color, #252d5c);
+    color: white;
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#a11y-toggle-btn:hover {
+    transform: scale(1.1);
+    background: var(--accent-color, #08395a);
+}
+
+#a11y-menu {
+    position: absolute;
+    bottom: 65px;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    padding: 16px;
+    width: 280px;
+    display: none;
+    border: 1px solid #c0c0c0;
+}
+
+#a11y-menu.open {
+    display: block;
+    animation: fadeInUp 0.2s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+body.dark-mode #a11y-menu {
+    background: #172840;
+    border-color: #2d4a65;
+    color: #f0f6fb;
+}
+
+#a11y-menu h6 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #444;
+    margin-bottom: 10px;
+    margin-top: 12px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #d0d0d0;
+    /* CORREÇÃO: font-weight adicionado para melhor legibilidade */
+    font-weight: 700;
+}
+
+body.dark-mode #a11y-menu h6 {
+    color: #a8c5de;
+    border-color: #2d4a65;
+}
+
+#a11y-menu h6:first-child { margin-top: 0; }
+
+.a11y-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 4px;
+    background: #eef2f5;
+    border: 1px solid #b0b8c1;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.15s;
+    color: #111;
+    text-align: left;
+}
+
+.a11y-btn:hover      { background: #1e3552; border-color: var(--primary-color, #0a4f6a); }
+.a11y-btn.active     { background: var(--primary-color, #0a4f6a); color: #1e3552; border-color: var(--primary-color, #0a4f6a); }
+/* Cor dos */
+body.dark-mode .a11y-btn        { background: #1e3552; border-color: #2d4a65; color: #f0f6fb; }
+body.dark-mode .a11y-btn:hover  { background: #254363; border-color: #5bbce0; }
+body.dark-mode .a11y-btn.active { background: #5bbce0; color: #0a0a0a; border-color: #1e3552; }
+
+.a11y-font-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.a11y-font-row span {
+    flex: 1;
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 40px;
+    color: #111;
+}
+/* Cor da letra */
+body.dark-mode .a11y-font-row span { color: #f0f6fb; }
+
+.a11y-font-row button { flex: 1; }
+
+kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #1e3552;
+    border: 1px solid #1e3552;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-family: monospace;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    color: #111;
+}
+
+body.dark-mode kbd { background: #2d4a65; border-color: #4a6a8a; color: #f0f6fb; }
+
+/* ============================================================
+   AULA 13 — NOVOS ESTILOS: Interatividade no DOM
+   ============================================================ */
+
+/* ── ① CARD DICA (mouseover / mouseout) ──────────────────── */
+/*
+   Animação de entrada do <p class="card-dica"> criado pelo JS.
+   O keyframe "fadeInDica" é referenciado via element.style.animation
+   no interatividade.js, portanto deve existir aqui no CSS.
+*/
+@keyframes fadeInDica {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Garante que o cursor indique interatividade nos cards com dica */
+.card-hover[data-extra] {
+    cursor: pointer;
+}
+
+/* ── ③ MODO LEITURA FOCADA (classList.toggle) ────────────── */
+/*
+   Quando o JS adiciona a classe "leitura-focada" ao <body>,
+   as regras abaixo escondem elementos não essenciais.
+*/
+
+/* Oculta a navbar inteira */
+body.leitura-focada #navbar {
+    display: none !important;
+}
+
+/* Oculta o hero, seções de sobre, tipos de fraude e quiz */
+body.leitura-focada #inicio,
+body.leitura-focada #sobre,
+body.leitura-focada #tipos,
+body.leitura-focada #quiz {
+    display: none !important;
+}
+
+/* Oculta o footer visual (mas mantém o botão acessível) */
+body.leitura-focada footer > *:not(:has(#btn-leitura-focada)) {
+    display: none !important;
+}
+
+/* Aumenta o espaçamento e a legibilidade da seção de notícias */
+body.leitura-focada #noticias {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+/* Classe aplicada ao bloco #conteudo-principal para espaçamento extra */
+.leitura-conteudo {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+    line-height: 1.9 !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* ── COMPATIBILIDADE DARK MODE com novos estilos ─────────── */
+body.dark-mode .card-dica {
+    color: #7dd3f0 !important;
+    background: rgba(26, 45, 64, 0.85) !important;
+    border-left-color: #5bbce0 !important;
+}
+
+body.dark-mode #pesquisa-noticias {
+    background-color: #1a2d40;
+    color: #f0f6fb;
+    border-color: #2d4a65;
+}
+
+body.dark-mode #pesquisa-noticias::placeholder {
+    color: #6b8ea8;
+}
+
+body.dark-mode #sem-resultado {
+    color: #a8c5de;
+}

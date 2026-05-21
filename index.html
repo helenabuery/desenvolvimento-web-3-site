@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducaSegura | Proteção contra Golpes Digitais</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary:   '#1a6a8a',
+                        accent:    '#0d5278',
+                        secondary: '#3a4370',
+                        'bg-light': '#d0eef8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Confetti (necessário para o quiz) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="font-sans text-gray-900 bg-white scroll-smooth">
+
+    <!-- NAVBAR
+         🔑 AULA 13 — Manipulação de Estilo Dinâmica:
+         O id="navbar" é alvo do botão "Modo Leitura Focada".
+         Ao ativar o modo, o JavaScript oculta este elemento via classList.toggle('leitura-oculto').
+    -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white border-b-4 border-accent shadow-sm">
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
+
+            <!-- Brand -->
+            <a href="#" class="text-xl font-bold text-primary tracking-tight">
+                AHLF<span class="text-secondary">CREATIVE</span>
+            </a>
+
+            <!-- Hamburger (mobile) -->
+            <button id="menuToggle"
+                    class="lg:hidden p-2 rounded text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400"
+                    aria-label="Abrir menu"
+                    aria-expanded="false"
+                    aria-controls="mobileMenu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
+
+            <!-- Nav Links -->
+            <div id="navMenu" class="hidden lg:flex items-center gap-6">
+                <ul class="flex flex-col lg:flex-row gap-2 lg:gap-1 items-start lg:items-center">
+                    <li><a href="#inicio"   class="nav-link px-3 py-2 rounded font-medium text-accent hover:text-secondary hover:underline transition-colors">Home</a></li>
+                    <li><a href="#sobre"    class="nav-link px-3 py-2 rounded font-medium text-accent hover:text-secondary hover:underline transition-colors">O que são Golpes</a></li>
+                    <li><a href="#tipos"    class="nav-link px-3 py-2 rounded font-medium text-accent hover:text-secondary hover:underline transition-colors">Tipos de Fraudes</a></li>
+                    <li><a href="#quiz"     class="nav-link px-3 py-2 rounded font-medium text-accent hover:text-secondary hover:underline transition-colors">Teste seu Conhecimento</a></li>
+                    <li><a href="#noticias" class="btn-custom px-4 py-2 rounded font-medium text-white bg-secondary hover:bg-primary transition-all hover:-translate-y-0.5 ml-2">Notícias</a></li>
+                </ul>
+
+                <!-- Acessibilidade rápida -->
+                <div class="flex items-center gap-2 ml-2 border-l border-gray-200 pl-4">
+                    <button id="themeToggle"  class="btn-sm px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 transition" aria-label="Alternar tema escuro/claro">🌙</button>
+                    <button id="fontDecrease" class="btn-sm px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 transition" aria-label="Diminuir fonte">A-</button>
+                    <button id="fontIncrease" class="btn-sm px-2 py-1 rounded border border-gray-300 text-sm hover:bg-gray-100 transition" aria-label="Aumentar fonte">A+</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pb-4">
+            <ul class="flex flex-col gap-1 pt-2">
+                <li><a href="#inicio"   class="block px-3 py-2 rounded font-medium text-accent hover:bg-bg-light transition">Home</a></li>
+                <li><a href="#sobre"    class="block px-3 py-2 rounded font-medium text-accent hover:bg-bg-light transition">O que são Golpes</a></li>
+                <li><a href="#tipos"    class="block px-3 py-2 rounded font-medium text-accent hover:bg-bg-light transition">Tipos de Fraudes</a></li>
+                <li><a href="#quiz"     class="block px-3 py-2 rounded font-medium text-accent hover:bg-bg-light transition">Teste seu Conhecimento</a></li>
+                <li><a href="#noticias" class="block px-3 py-2 rounded font-medium text-white bg-secondary hover:bg-primary transition mt-1">Notícias</a></li>
+            </ul>
+            <div class="flex gap-2 mt-3">
+                <button id="themeToggleMobile"  class="px-3 py-1 rounded border border-gray-300 text-sm" aria-label="Alternar tema escuro/claro">🌙</button>
+                <button id="fontDecreaseMobile" class="px-3 py-1 rounded border border-gray-300 text-sm" aria-label="Diminuir fonte">A-</button>
+                <button id="fontIncreaseMobile" class="px-3 py-1 rounded border border-gray-300 text-sm" aria-label="Aumentar fonte">A+</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header id="inicio" class="hero-section min-h-[80vh] flex items-center bg-gradient-to-br from-bg-light to-white">
+        <div id="conteudo-principal" class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+
+                <div class="flex-1 text-center lg:text-left" id="hero-text">
+                    <h1 class="hero-title text-4xl lg:text-5xl font-bold leading-tight text-gray-900">
+                        Quem entende,<br>se protege melhor.
+                    </h1>
+                    <p class="hero-sub mt-6 text-lg text-gray-600 max-w-lg mx-auto lg:mx-0">
+                        Aprenda a identificar ameaças, proteger seus dados e navegar com confiança em um mundo cada vez mais conectado.
+                    </p>
+                    <a href="#sobre" class="hero-btn inline-block mt-8 px-8 py-3 rounded-lg bg-secondary text-white font-semibold text-lg hover:bg-primary hover:-translate-y-1 transition-all duration-300 shadow-md">
+                        Dar o primeiro passo
+                    </a>
+                </div>
+
+                <div class="hero-img flex-1 hidden lg:block">
+                     <img src="" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+
+                <div class="flex-1 sobre-text">
+                    <h2 class="section-title text-3xl font-bold text-gray-900 mb-6">O que são Golpes Digitais?</h2>
+                    <p class="text-gray-600 mb-4">
+                        Golpes digitais são estratégias fraudulentas criadas por criminosos para enganar usuários e obter vantagens ilícitas, como senhas bancárias, dados pessoais ou transferências financeiras diretas.
+                    </p>
+                    <p class="text-gray-600">
+                        Diferente de vírus comuns, esses ataques exploram o elo mais fraco da corrente: <strong class="text-accent">o comportamento humano</strong>.
+                    </p>
+                </div>
+
+                <div class="flex-1 sobre-card">
+                    <div class="rounded-xl p-8 border-0 shadow-md bg-bg-light">
+                        <h5 class="text-lg font-bold text-gray-900 mb-3">Você sabia?</h5>
+                        <p class="text-gray-700">Grande parte das brechas de segurança começam com um erro humano, como clicar em um link suspeito.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIPOS
+         🔑 AULA 13 — Evento de Mouse (mouseover / mouseout):
+         Cada card recebe dois atributos personalizados (data-*):
+           • data-extra: texto explicativo que aparece dinamicamente ao passar o mouse.
+           • data-cor: cor de fundo aplicada via JS durante o hover.
+         O JavaScript lê esses atributos, injeta um <p> com a dica e altera o background.
+         Ao remover o mouse (mouseout), o parágrafo é deletado e a cor original é restaurada.
+    -->
+    <section id="tipos" class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="tipos-title section-title text-3xl font-bold text-gray-900 mb-14">Principais Ataques</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Card 1 — Phishing -->
+                <div class="card-hover group rounded-xl border-0 shadow-md p-8 border-t-4 border-t-accent bg-white cursor-default"
+                     data-extra="Dica: Verifique sempre o endereço do remetente antes de clicar em qualquer link enviado por e-mail!"
+                     data-cor="#e0f2fe">
+                    <div class="text-5xl mb-4">📧</div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Phishing</h4>
+                    <p class="text-gray-600">E-mails ou mensagens falsas que fingem ser de empresas confiáveis para roubar suas credenciais.</p>
+                </div>
+
+                <!-- Card 2 — Engenharia Social -->
+                <div class="card-hover group rounded-xl border-0 shadow-md p-8 border-t-4 border-t-accent bg-white cursor-default"
+                     data-extra="Dica: Nunca forneça senhas ou dados pessoais por telefone, mesmo que o solicitante pareça legítimo!"
+                     data-cor="#fef9c3">
+                    <div class="text-5xl mb-4">🧠</div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Engenharia Social</h4>
+                    <p class="text-gray-600">Manipulação psicológica para convencer a vítima a entregar informações confidenciais voluntariamente.</p>
+                </div>
+
+                <!-- Card 3 — Golpes de WhatsApp -->
+                <div class="card-hover group rounded-xl border-0 shadow-md p-8 border-t-4 border-t-accent bg-white cursor-default"
+                     data-extra="Dica: Sempre ligue para confirmar a identidade antes de transferir dinheiro, mesmo para 'familiares' no WhatsApp!"
+                     data-cor="#dcfce7">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h4 class="text-xl font-bold text-gray-900 mb-3">Golpes de WhatsApp</h4>
+                    <p class="text-gray-600">Clonagem de perfil ou pedidos urgentes de dinheiro fingindo ser um familiar ou amigo.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="py-20 bg-primary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center">
+                <div class="w-full max-w-2xl text-center">
+                    <h2 class="quiz-title text-3xl font-bold text-white mb-8">Desafio do Guardião Digital 🛡️</h2>
+
+                    <!-- Progress -->
+                    <div class="w-full h-2.5 rounded-full mb-8" style="background:rgba(255,255,255,0.2)">
+                        <div id="quiz-progress"
+                             class="h-full rounded-full bg-accent transition-all duration-500"
+                             style="width:0%"
+                             role="progressbar"
+                             aria-valuenow="0"
+                             aria-valuemin="0"
+                             aria-valuemax="100"
+                             aria-label="Progresso do quiz"></div>
+                    </div>
+
+                    <div id="quiz-card" class="rounded-2xl p-8 shadow-2xl bg-white text-gray-900 min-h-[350px] flex flex-col justify-center">
+                        <div id="question-container">
+                            <span id="question-number" class="inline-block bg-gray-200 text-gray-700 text-sm font-medium px-3 py-1 rounded-full mb-4">Questão 1 de 5</span>
+                            <h4 id="question-text" class="text-xl font-semibold mb-6">Carregando pergunta...</h4>
+                            <div id="options-container" class="grid gap-3"></div>
+                        </div>
+                        <div id="result-container" class="hidden text-center">
+                            <div class="text-6xl mb-4">🎉</div>
+                            <h3 id="result-title" class="text-2xl font-bold mb-3">Incrível!</h3>
+                            <p id="result-text" class="text-lg text-gray-600 mb-6"></p>
+                            <button onclick="window.resetQuiz()" class="px-6 py-3 rounded-lg bg-secondary text-white font-semibold hover:bg-primary hover:-translate-y-1 transition-all">
+                                Tentar Novamente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTÍCIAS
+         🔑 AULA 13 — Evento de Teclado (keyup):
+         O campo <input id="pesquisa-noticias"> escuta o evento "keyup".
+         A cada tecla solta, o JS lê o value digitado, percorre todos os
+         elementos .noticia-card e compara o texto do <h5> (título) com o
+         termo buscado. Cards sem correspondência recebem display:none;
+         os que correspondem voltam a display:block.
+         O parágrafo #sem-resultado é exibido caso nenhum card passe no filtro.
+    -->
+    <section id="noticias" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="noticias-title section-title text-3xl font-bold text-gray-900 text-center mb-8">Notícias: Alerta de Golpes Recentes</h2>
+
+            <!-- ── CAMPO DE PESQUISA (Novo) ── -->
+            <div class="flex justify-center mb-10">
+                <div class="relative w-full max-w-md">
+                    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 pointer-events-none">🔍</span>
+                    <input
+                        type="search"
+                        id="pesquisa-noticias"
+                        placeholder="Pesquisar notícias..."
+                        aria-label="Pesquisar notícias por título"
+                        class="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-gray-200 focus:border-accent focus:outline-none text-gray-800 bg-white shadow-sm transition-colors"
+                    >
+                </div>
+            </div>
+            <!-- Mensagem exibida quando nenhuma notícia corresponde ao filtro -->
+            <p id="sem-resultado" class="hidden text-center text-gray-500 mb-8">Nenhuma notícia encontrada para "<span id="termo-buscado"></span>".</p>
+
+            <div id="lista-noticias" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <div class="noticia-card rounded-xl shadow-md bg-white overflow-hidden hover:scale-[1.03] transition-transform duration-200">
+                    <div class="p-6">
+                        <span class="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded mb-3">Novo Golpe</span>
+                        <h5 class="text-lg font-bold text-gray-900 mb-2">Fraude do "Falso Emprego" via SMS</h5>
+                        <p class="text-sm text-gray-500">Criminosos prometem salários altos para tarefas simples no celular. O objetivo é roubar dados bancários.</p>
+                    </div>
+                </div>
+
+                <div class="noticia-card rounded-xl shadow-md bg-white overflow-hidden hover:scale-[1.03] transition-transform duration-200">
+                    <div class="p-6">
+                        <span class="inline-block bg-yellow-400 text-gray-900 text-xs font-semibold px-3 py-1 rounded mb-3">Atenção</span>
+                        <h5 class="text-lg font-bold text-gray-900 mb-2">O Golpe do "Presente de Aniversário"</h5>
+                        <p class="text-sm text-gray-500">Vítimas recebem ligações dizendo que há um presente, mas precisam pagar uma taxa de entrega na maquininha adulterada.</p>
+                    </div>
+                </div>
+
+                <div class="noticia-card rounded-xl shadow-md bg-white overflow-hidden hover:scale-[1.03] transition-transform duration-200">
+                    <div class="p-6">
+                        <span class="inline-block bg-blue-400 text-white text-xs font-semibold px-3 py-1 rounded mb-3">Dica</span>
+                        <h5 class="text-lg font-bold text-gray-900 mb-2">Cuidado com QR Codes Maliciosos</h5>
+                        <p class="text-sm text-gray-500">Ataques de "Quishing" estão inserindo códigos falsos em estabelecimentos para desviar pagamentos Pix.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER
+         🔑 AULA 13 — Manipulação de Estilo Dinâmica:
+         O botão abaixo (#btn-leitura-focada) aciona o "Modo Leitura Focada".
+         Ele está no footer para que o usuário possa ativá-lo antes de rolar
+         a página para a seção de conteúdo. Pode ser reposicionado conforme
+         necessidade do projeto.
+    -->
+    <footer class="py-8 text-center bg-secondary text-white">
+        <p class="text-sm mb-1">&copy; 2026 Projeto 1 Web - Proteção contra golpes digitais</p>
+        <p class="text-xs text-blue-200 mb-4">"O elo mais fraco da cadeia de segurança é o elemento humano." - Kevin Mitnick</p>
+
+        <!-- Botão Modo Leitura Focada (Novo) -->
+        <div class="mb-4">
+            <button
+                id="btn-leitura-focada"
+                aria-pressed="false"
+                aria-label="Ativar ou desativar Modo Leitura Focada"
+                class="px-5 py-2 rounded-lg bg-white text-secondary font-semibold text-sm hover:bg-blue-100 transition-all shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400">
+                📖 Modo Leitura Focada
+            </button>
+        </div>
+
+        <div class="flex justify-center gap-4">
+            <a href="https://github.com/helencloudbuer" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-white text-secondary text-sm font-medium rounded hover:bg-gray-100 transition">Ana Helena Buery</a>
+            <a href="https://github.com/LeticiaPFranca" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-white text-secondary text-sm font-medium rounded hover:bg-gray-100 transition">Letícia Franca</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <!-- Novo módulo de interatividade (Aula 13) -->
+    <script src="interatividade.js"></script>
+</body>
+</html>
