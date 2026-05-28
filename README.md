@@ -167,4 +167,4 @@ Desenvolvido como projeto acadêmico de Desenvolvimento Web.
 
 ---
 
-<p align="center">Feito com 💙 para um ambiente digital mais seguro e acessível</p>
+
