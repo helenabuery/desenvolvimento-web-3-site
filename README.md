@@ -166,5 +166,7 @@ Desenvolvido como projeto acadêmico de Desenvolvimento Web.
 | Letícia Franca | [@LeticiaPFranca](https://github.com/LeticiaPFranca) |
 
 ---
-
+## Observação: 
+**LINKS DOS OUTROS REPOSITORIOS**:
+Repositorio do dia 21/05: https://github.com/helenabuery/desenvolvimento-web-monitor 
 
